@@ -7,5 +7,46 @@ services:
       context: .
     ports:
       - 80:8000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost/up || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
     env_file:
       - .env
+      - .env.production
+      - .env.key
+  redis:
+    container_name: redis
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+  queue:
+    container_name: laravel_queue
+    image: image_laravel_frankenphp
+    depends_on:
+      - laravel_frankenphp
+      - redis
+    command: php artisan queue:work --tries=3
+    restart: unless-stopped
+    env_file:
+      - .env
+      - .env.production
+      - .env.key
+  scheduler:
+    container_name: laravel_scheduler
+    image: image_laravel_frankenphp
+    depends_on:
+      - laravel_frankenphp
+    command: /bin/sh -lc "while true; do php artisan schedule:run; sleep 60; done"
+    restart: unless-stopped
+    env_file:
+      - .env
+      - .env.production
+      - .env.key
+
+volumes:
+  redis-data:
