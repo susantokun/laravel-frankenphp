@@ -6,6 +6,8 @@ WORKDIR /app
 
 COPY --chown=www-data:www-data . /app
 
+RUN chown -R www-data:www-data /app
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
         zip \
         unzip \

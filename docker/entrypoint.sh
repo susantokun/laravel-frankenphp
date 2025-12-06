@@ -8,6 +8,6 @@ if [ -f .env.production.encrypted ] && [ ! -f .env.production ]; then
   php artisan env:decrypt --env=production --key="$ENV_ENCRYPTION_KEY"
 fi
 if [ -f .env.production ]; then
-  ln -sf .env.production .env
+  cp -f .env.production .env
 fi
 exec "$@"
