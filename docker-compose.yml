@@ -1,0 +1,14 @@
+services:
+  laravel_frankenphp:
+    container_name: laravel_frankenphp
+    image: image_laravel_frankenphp
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - 8000:8000
+      # - "80:80" # HTTP
+      # - "443:443" # HTTPS
+      # - "443:443/udp" # HTTP/3
+    env_file:
+      - .env
