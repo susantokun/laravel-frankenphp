@@ -43,13 +43,13 @@ services:
     volumes:
       - redis-data:/data
     restart: unless-stopped
-  queue:
-    container_name: laravel_queue
+  horizon:
+    container_name: laravel_horizon
     image: image_laravel_frankenphp
     depends_on:
       - laravel_frankenphp
       - redis
-    command: php artisan queue:work --tries=3
+    command: php artisan horizon
     restart: unless-stopped
     env_file:
       - .env

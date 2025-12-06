@@ -27,7 +27,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader && \
     composer require laravel/octane && \
-    php artisan octane:install --server=frankenphp
+    composer require laravel/horizon
 
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh

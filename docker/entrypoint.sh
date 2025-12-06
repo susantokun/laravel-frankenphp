@@ -13,6 +13,17 @@ if [ -f .env.production ]; then
   fi
   cp -f .env.production .env
 fi
+if [ ! -f config/octane.php ]; then
+  php artisan octane:install --server=frankenphp || true
+fi
+if [ ! -f config/horizon.php ]; then
+  php artisan horizon:install || true
+fi
+php artisan optimize:clear || true
+php artisan config:cache || true
+php artisan route:cache || true
+php artisan view:cache || true
+php artisan event:cache || true
 mkdir -p storage/app/public storage/logs
 php artisan storage:link || true
 chown -R www-data:www-data storage || true

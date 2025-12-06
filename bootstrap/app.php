@@ -10,6 +10,9 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+    ->withProviders([
+        ...(class_exists(\Laravel\Horizon\Horizon::class) ? [App\Providers\HorizonServiceProvider::class] : []),
+    ])
     ->withMiddleware(function (Middleware $middleware): void {
         //
     })
