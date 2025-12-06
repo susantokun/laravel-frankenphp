@@ -13,4 +13,7 @@ if [ -f .env.production ]; then
   fi
   cp -f .env.production .env
 fi
+mkdir -p storage/app/public storage/logs
+php artisan storage:link || true
+chown -R www-data:www-data storage || true
 exec "$@"

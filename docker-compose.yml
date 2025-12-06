@@ -16,6 +16,8 @@ services:
     env_file:
       - .env
       - .env.key
+    volumes:
+      - app-storage:/app/storage
   caddy:
     container_name: caddy
     image: caddy:2-alpine
@@ -52,6 +54,8 @@ services:
     env_file:
       - .env
       - .env.key
+    volumes:
+      - app-storage:/app/storage
   scheduler:
     container_name: laravel_scheduler
     image: image_laravel_frankenphp
@@ -62,8 +66,11 @@ services:
     env_file:
       - .env
       - .env.key
+    volumes:
+      - app-storage:/app/storage
 
 volumes:
   redis-data:
   caddy-data:
   caddy-config:
+  app-storage:
