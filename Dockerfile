@@ -37,4 +37,4 @@ EXPOSE 8000
 USER www-data
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["php","artisan","octane:start","--server=frankenphp","--host=0.0.0.0","--port=8000"]
+CMD ["sh","-lc","php artisan octane:start --server=frankenphp --host=0.0.0.0 --port=${APP_INTERNAL_PORT:-8000}"]
