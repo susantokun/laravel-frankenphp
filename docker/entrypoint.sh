@@ -27,4 +27,7 @@ php artisan event:cache || true
 mkdir -p storage/app/public storage/logs
 php artisan storage:link || true
 chown -R www-data:www-data storage || true
+if [ "$AUTO_MIGRATE" = "true" ]; then
+  php artisan migrate --force || true
+fi
 exec "$@"

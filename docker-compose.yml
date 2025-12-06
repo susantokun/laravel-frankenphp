@@ -18,6 +18,8 @@ services:
       - .env.key
     volumes:
       - app-storage:/app/storage
+    depends_on:
+      - mysql
   caddy:
     container_name: caddy
     image: caddy:2-alpine
@@ -42,6 +44,18 @@ services:
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - redis-data:/data
+    restart: unless-stopped
+  mysql:
+    container_name: mysql
+    image: mysql:8.0
+    command: ["--default-authentication-plugin=caching_sha2_password"]
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-root}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - ${HOST_DB_PORT:-3306}:3306
     restart: unless-stopped
   horizon:
     container_name: laravel_horizon
@@ -74,3 +88,4 @@ volumes:
   caddy-data:
   caddy-config:
   app-storage:
+  mysql-data:

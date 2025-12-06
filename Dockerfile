@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libzip-dev \
         zlib1g-dev \
     && docker-php-ext-configure zip \
-    && docker-php-ext-install zip pcntl \
+    && docker-php-ext-install zip pcntl pdo_mysql \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pecl install redis \
