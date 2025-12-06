@@ -16,6 +16,24 @@ services:
     env_file:
       - .env
       - .env.key
+  caddy:
+    container_name: caddy
+    image: caddy:2-alpine
+    depends_on:
+      - laravel_frankenphp
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/etc/caddy
+      - ./docker/caddy-entrypoint.sh:/scripts/caddy-entrypoint.sh:ro
+    restart: unless-stopped
+    env_file:
+      - .env
+      - .env.key
+    command: ["/bin/sh","-lc","/scripts/caddy-entrypoint.sh"]
   redis:
     container_name: redis
     image: redis:7-alpine
@@ -47,3 +65,5 @@ services:
 
 volumes:
   redis-data:
+  caddy-data:
+  caddy-config:
