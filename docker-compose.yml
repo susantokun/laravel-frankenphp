@@ -15,7 +15,6 @@ services:
       retries: 3
     env_file:
       - .env
-      - .env.production
       - .env.key
   redis:
     container_name: redis
@@ -34,7 +33,6 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-      - .env.production
       - .env.key
   scheduler:
     container_name: laravel_scheduler
@@ -45,7 +43,6 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-      - .env.production
       - .env.key
 
 volumes:
